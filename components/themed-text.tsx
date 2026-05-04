@@ -1,60 +1,21 @@
-import { StyleSheet, Text, type TextProps } from 'react-native';
+// filepath: /Users/harmi/szeged365_mobil/app/components/themed-text.tsx
+import React from "react";
+import { Text, TextProps, TextStyle } from "react-native";
+import { useTheme } from "..//app/providers/ThemeProvider";
 
-import { useThemeColor } from '@/hooks/use-theme-color';
+type Props = TextProps & { type?: "title" | "link" | "default" };
 
-export type ThemedTextProps = TextProps & {
-  lightColor?: string;
-  darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
-};
-
-export function ThemedText({
-  style,
-  lightColor,
-  darkColor,
-  type = 'default',
-  ...rest
-}: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
-
+export function ThemedText({ style, children, type = "default", ...rest }: Props) {
+  const { colors } = useTheme();
+  const base: TextStyle = { color: colors.text };
+  const typeStyle: TextStyle = type === "title" ? { fontSize: 22, fontWeight: "700" } : type === "link" ? { color: "#007AFF" } : {};
+  const merged = [base, typeStyle, style] as any;
   return (
-    <Text
-      style={[
-        { color },
-        type === 'default' ? styles.default : undefined,
-        type === 'title' ? styles.title : undefined,
-        type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
-        type === 'subtitle' ? styles.subtitle : undefined,
-        type === 'link' ? styles.link : undefined,
-        style,
-      ]}
-      {...rest}
-    />
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Text style={merged} {...rest}>
+      {children}
+    </Text>
   );
 }
 
-const styles = StyleSheet.create({
-  default: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  defaultSemiBold: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '600',
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    lineHeight: 32,
-  },
-  subtitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  link: {
-    lineHeight: 30,
-    fontSize: 16,
-    color: '#0a7ea4',
-  },
-});
+export default ThemedText;

@@ -34,6 +34,13 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const now = new Date();
+const formatted = now.toLocaleDateString('hu-HU', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  weekday: 'long'
+});
 
   const loadPosts = async () => {
     try {
@@ -91,9 +98,13 @@ const HomeScreen = () => {
   }
 
 return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#0000ff" }}>
       <View style={styles.container}>
-        <Text style={styles.header}>Szeged365 Hírek</Text>
+        <Text style={styles.header}>Szeged365</Text>
+        <Text style={{ paddingHorizontal: 18, marginBottom: 12, color: "#6e6e73" }}>
+          {formatted}
+           - boldog nevnapot kivanunk, aki ma tartja, API kurvara nem volt ra.
+        </Text>
 
         <FlatList
           data={posts}
