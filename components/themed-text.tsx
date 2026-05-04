@@ -1,7 +1,7 @@
 // filepath: /Users/harmi/szeged365_mobil/app/components/themed-text.tsx
 import React from "react";
 import { Text, TextProps, TextStyle } from "react-native";
-import { useTheme } from "..//app/providers/ThemeProvider";
+import { useTheme } from "../app/providers/ThemeProvider";
 
 type Props = TextProps & { type?: "title" | "link" | "default" };
 
